@@ -1,14 +1,19 @@
 
+//TEMP SAVE LIST:
+//
+
+
 var power = 1;//0=Hide JavaScript ~ 1=Show JavaScript
 
 if(power===1){
 
 //CONTROLS IF "STARTUP"!!!!!!!!!!!!!!!!!!!!!!
-var startUp = 1;
+var startUp = 0;
 
 // Creates canvas and background variables
 var canWidth = 600;
 var canHeight = 600;
+var saveSpace = 100;
 var buttonSpace = 40;
 var bgColor = 'black';
 
@@ -29,12 +34,14 @@ var rect = paper.rect(0, 0, canWidth, canHeight+buttonSpace).attr({fill: "bgColo
 if(startUp===0){
 
 	//Draws Background 0
-	//paper.rect(0, 0, canWidth, canHeight+buttonSpace).attr({fill: bgColor }).attr("stroke", bgColor);
+	//paper.rect(0, 0, canWidth, canHeight+buttonSpace).attr({fill: bgColor }).attr("stroke", bgColor)
 
 
 	var logoX = canWidth/2.4;//to get it centered
 	var logoY = canHeight/2.4;//to get it centered
 	var center0 = logoX;//250
+
+	var smallBoxColor = 'darkred';
 
 	var midBoxSize = 80;
 	var outerBoxSize = 50;
@@ -47,19 +54,11 @@ if(startUp===0){
 
 		//////////////SECTION A/////////////////
 	paper.rect(center0, center0, 80, 80).attr({stroke: 'white'});
-	//var rectA = paper.rect(center0+80, center0-50, outerBoxSize, outerBoxSize).attr({stroke: 'white'});//TOP RIGHT
-	var rectB = paper.rect(center0-50, center0-50, outerBoxSize, outerBoxSize).attr({stroke: 'black'});//TOP LEFT
-	//var rectC = paper.rect(center0+80, center0+80, outerBoxSize, outerBoxSize).attr({stroke: 'white'});//BOTTOM RIGHT
-	//var rectD = paper.rect(center0-50, center0+80, outerBoxSize, outerBoxSize).attr({stroke: 'white'});//BOTTOM LEFT
+	//var rectA = paper.rect(center0+80, center0-50, outerBoxSize, outerBoxSize).attr({stroke: smallBoxColor});//TOP RIGHT
+	var rectB = paper.rect(center0-50, center0-50, outerBoxSize, outerBoxSize).attr({stroke: smallBoxColor});//TOP LEFT
+	//var rectC = paper.rect(center0+80, center0+80, outerBoxSize, outerBoxSize).attr({stroke: smallBoxColor});//BOTTOM RIGHT
+	//var rectD = paper.rect(center0-50, center0+80, outerBoxSize, outerBoxSize).attr({stroke: smallBoxColor});//BOTTOM LEFT
 //////									     //////
-
-	/*var rightB = function(){
-		rectB.animate({cx: center0-100},3000,'bounce');
-	}
-	var leftB = function(){
-		rectB.animate({cx: center0-50},3000,'bounce');
-	}
-	rightA();*/
 
 	var rectBAnim = function(){
 		rectB.animate({cx: 150},3000,'linear');
@@ -105,7 +104,7 @@ if(startUp===1){
 	var COLOR_HOVER = 'red';
 	var boxRowStroke = 'white';
 
-	var cSpace = 60; //Changes amount of boxes (smaller the # the more boxes)
+	var cSpace = 30; //<<<<<<NEVER CHANGE USLESS TERMINAL DECONSTRUCTION
 
 	var group = paper.set();
 	var boxRow = new Array();
@@ -127,9 +126,10 @@ if(startUp===1){
 		for(var a=0; a<canWidth/cSpace; a+=1){
 
 			textChar[i][a] = paper.text(a*cSpace+cSpace/2, i*cSpace+cSpace/2, textChar[i][a]).attr("font-size",textSize);
-			textChar[i][a].attr("text", " ").attr("fill", "white"); //Default text character (blank unit)
+			textChar[i][a].attr("text", " ").attr("fill", "white"); //Default text character (space)
 
 			boxRow[i][a] = paper.rect(a*cSpace, i*cSpace, cSpace, cSpace);
+
 			boxRow[i][a].attr({fill: COLOR_NORMAL}).attr({stroke: boxRowStroke}).attr("stroke-width", swNor).attr("fill-opacity", 0)
 
 			boxRow[i][a].attr({cursor: 'pointer',}).mouseup(function(e) {
@@ -168,7 +168,7 @@ if(startUp===1){
 		}//end loop "i"
 	}//end function "hide"
 
-	var save = function(){
+	var save = function(){//SPACES=_ / no caps!
 		conk="";
 		for(var i=0; i<canHeight/cSpace; i+=1){
 
@@ -182,11 +182,11 @@ if(startUp===1){
 	var load = function(){
 
 		conk = localStorage.getItem(document.getElementById("setName").value);
-		//alert(conk.charAt(0));
+		//alert(conk.charAt(i*20+a));
 		for(var i=0; i<canHeight/cSpace; i+=1){
 
 			for(var a=0; a<canWidth/cSpace; a+=1){
-				doc = conk.charAt(i*10+a);
+				doc = conk.charAt(i*20+a);
 				iCurr = i;
 				aCurr = a;
 				setColor();
@@ -212,6 +212,9 @@ if(startUp===1){
 		}
 		if(doc==="P"){
 			textChar[iCurr][aCurr].attr("fill","peachpuff");//NPC
+		}
+		if(doc==="*"){
+			textChar[iCurr][aCurr].attr("fill","darkred");//camp 
 		}
 
 	}
